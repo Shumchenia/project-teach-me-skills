@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driverClassName:
+  jpa:
+    show-sql: true
+    hibernate: ddl-auto=none
+    naming:
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+        default_schema: db
+  liquibase:
+    enabled: true
+
+
+parse:
+  newsUrl: https://www.championat.com/news/1.html

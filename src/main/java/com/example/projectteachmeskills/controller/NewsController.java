@@ -1,7 +1,7 @@
-package com.example.projectteachmeskills.controllers;
+package com.example.projectteachmeskills.controller;
 
 import com.example.projectteachmeskills.entity.News;
-import com.example.projectteachmeskills.service.NewsServise;
+import com.example.projectteachmeskills.service.NewsService;
 import com.example.projectteachmeskills.util.NewsByIdNotFoundException;
 import com.example.projectteachmeskills.util.NewsErrorResponce;
 import lombok.AllArgsConstructor;
@@ -10,38 +10,36 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/news")
 public class NewsController {
 
-    private final NewsServise newsServise;
+    private final NewsService newsService;
 
     @GetMapping
     public List<News> findAll(){
-        return newsServise.findAll();
+        return newsService.findAll();
     }
 
     @GetMapping("/{id}")
     public News findById(@PathVariable("id") Long id){
-        return newsServise.findById(id);
+        return newsService.findById(id);
     }
 
     @GetMapping("/category/{category}")
     public List<News> findByCategory(@PathVariable("category") String category){
-        return newsServise.findByCategory(category);
+        return newsService.findByCategory(category);
     }
-
     @GetMapping("/containing/{containing}")
-    public Optional<News> findByTitleContaining(@PathVariable("containing") String substring){
-        return newsServise.findByTitleContaining(substring);
+    public List<News> findByTitleContaining(@PathVariable("containing") String substring){
+        return newsService.findByTitleContaining(substring);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id){
-        newsServise.deleteById(id);
+        newsService.deleteById(id);
     }
 
 

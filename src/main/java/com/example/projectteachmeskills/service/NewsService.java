@@ -5,7 +5,7 @@ import com.example.projectteachmeskills.entity.News;
 import java.util.List;
 import java.util.Optional;
 
-public interface NewsServise {
+public interface NewsService {
 
     void save(News news);
 
@@ -17,7 +17,7 @@ public interface NewsServise {
 
     List<News> findByCategory(String category);
 
-    Optional<News> findByTitleContaining(String substring);
+    List<News> findByTitleContaining(String substring);
 
     List<News> findAll();
 

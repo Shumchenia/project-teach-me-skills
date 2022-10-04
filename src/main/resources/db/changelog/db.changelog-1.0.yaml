@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-news
+      author: Matvei
+      changes:
+        - createTable:
+            tableName: news
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(200)
+              - column:
+                  name: content_url
+                  type: varchar(300)
+              - column:
+                  name: date
+                  type: datetime
+              - column:
+                  name: category
+                  type: varchar(50)
+  - changeSet:
+      id: create-users
+      author: Matvei
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: first_name
+                  type: varchar(255)
+              - column:
+                  name: password
+                  type: varchar(255)
+              - column:
+                  name: role
+                  type: varchar(255)
+              - column:
+                  name: user_name
+                  type: varchar(30)

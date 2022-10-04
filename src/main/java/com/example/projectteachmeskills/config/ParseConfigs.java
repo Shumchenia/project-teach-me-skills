@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@ConfigurationProperties(prefix = "parse.url")
-public class ParseUrl {
-    private String news;
+@ConfigurationProperties(prefix = "parse")
+public class ParseConfigs {
+    private String newsUrl;
 }

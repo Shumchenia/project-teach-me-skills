@@ -1,14 +1,13 @@
 package com.example.projectteachmeskills.job;
 
-import com.example.projectteachmeskills.config.ParseUrl;
+import com.example.projectteachmeskills.config.ParseConfigs;
 import com.example.projectteachmeskills.entity.News;
-import com.example.projectteachmeskills.service.NewsServise;
+import com.example.projectteachmeskills.service.NewsService;
 import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -16,17 +15,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "parse.news")
 public class NewsParser {
 
-    private NewsServise newsServise;
+    private NewsService newsService;
 
-    private ParseUrl url;
+    private ParseConfigs url;
 
     @Scheduled(fixedDelay = 3600000)
     public void parseNews() {
@@ -34,25 +31,25 @@ public class NewsParser {
         try {
             LocalDateTime lastParseTime = LocalDateTime.now().minusHours(1);
 
-            Elements elNews = parsePage(url.getNews()).getElementsByClass("news-item");
+            Elements elNews = parsePage(url.getNewsUrl()).getElementsByClass("news-item");
 
             for (Element el : elNews) {
 
                 LocalDateTime newsTime = convertTime(el.select("div[class=news-item__time]").text());
 
-                if (newsTime.isAfter(lastParseTime)&& newsTime.isBefore(LocalDateTime.now())) {
+                if (newsTime.isAfter(lastParseTime) && newsTime.isBefore(LocalDateTime.now())) {
 
                     News news = new News();
-
+                    String category = el.getElementsByClass("news-item__tag").text();
                     news.setContentUrl("https://www.championat.com/" + el.getElementsByTag("a")
                             .attr("href"));
                     news.setTitle(el.getElementsByTag("a").first().text());
                     news.setDateTime(newsTime);
                     news.setCategory(el.getElementsByClass("news-item__tag").text());
 
-                    if(newsServise.findByTitle(news.getTitle()).isEmpty()){
-                       newsServise.save(news);
-                   }
+                    if (newsService.findByTitle(news.getTitle()).isEmpty() && !category.isEmpty()) {
+                        newsService.save(news);
+                    }
                 }
             }
         } catch (IOException e) {

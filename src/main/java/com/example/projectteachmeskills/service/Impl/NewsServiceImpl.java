@@ -2,7 +2,7 @@ package com.example.projectteachmeskills.service.Impl;
 
 import com.example.projectteachmeskills.entity.News;
 import com.example.projectteachmeskills.repositrory.NewsRepository;
-import com.example.projectteachmeskills.service.NewsServise;
+import com.example.projectteachmeskills.service.NewsService;
 import com.example.projectteachmeskills.util.NewsByIdNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @AllArgsConstructor
-public class NewsServiceImpl implements NewsServise {
+public class NewsServiceImpl implements NewsService {
 
     private final NewsRepository newsRepository;
 
@@ -43,8 +43,9 @@ public class NewsServiceImpl implements NewsServise {
     }
 
     @Override
-    public Optional<News> findByTitleContaining(String substring) {
-        Optional<News> foundNews= newsRepository.findByTitleContaining(substring);
+    public List<News> findByTitleContaining(String substring) {
+        List<News> foundNews= newsRepository.findByTitleContaining(substring)
+                .stream().toList();
         return foundNews;
     }
 
@@ -58,6 +59,7 @@ public class NewsServiceImpl implements NewsServise {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id){
         newsRepository.deleteById(id);
     }
