@@ -37,12 +37,6 @@ public class NewsController {
         return newsService.findByTitleContaining(substring);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
-        newsService.deleteById(id);
-    }
-
-
     @ExceptionHandler
     private ResponseEntity<NewsErrorResponce> handleException(NewsByIdNotFoundException e){
         NewsErrorResponce responce = new NewsErrorResponce(

@@ -8,10 +8,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 
+
 @SpringBootApplication
 @EnableScheduling
 public class ProjectTeachMeSkillsApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProjectTeachMeSkillsApplication.class, args);
+        }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
 }

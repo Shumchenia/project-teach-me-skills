@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
 
-    Optional<News> findByTitleContaining(String substring);
+    List<News> findByTitleContaining(String substring);
 
     List<News> findByCategory(String category);
 

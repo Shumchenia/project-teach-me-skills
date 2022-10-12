@@ -1,6 +1,8 @@
 package com.example.projectteachmeskills.service.Impl;
 
+import com.example.projectteachmeskills.dto.NewsDTO;
 import com.example.projectteachmeskills.entity.News;
+import com.example.projectteachmeskills.mapper.NewsMapper;
 import com.example.projectteachmeskills.repositrory.NewsRepository;
 import com.example.projectteachmeskills.service.NewsService;
 import com.example.projectteachmeskills.util.NewsByIdNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,9 +21,13 @@ public class NewsServiceImpl implements NewsService {
 
     private final NewsRepository newsRepository;
 
+    private final NewsMapper newsMapper;
+
     @Override
     @Transactional
-    public void save(News news) {
+    public void save(NewsDTO newsDTO) {
+        News news =newsMapper.toNews(newsDTO);
+        System.out.println(news);
         newsRepository.save(news);
     }
 
@@ -38,15 +45,13 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public Optional<News> findByTitle(String title) {
-        Optional<News> foundNews= newsRepository.findByTitle(title);
-        return foundNews;
+        return newsRepository.findByTitle(title);
     }
 
     @Override
     public List<News> findByTitleContaining(String substring) {
-        List<News> foundNews= newsRepository.findByTitleContaining(substring)
-                .stream().toList();
-        return foundNews;
+        return newsRepository.findByTitleContaining(substring)
+                .stream().collect(Collectors.toList());
     }
 
     @Override
