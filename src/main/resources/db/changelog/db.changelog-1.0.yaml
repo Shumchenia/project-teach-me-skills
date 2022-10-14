@@ -25,29 +25,68 @@ databaseChangeLog:
               - column:
                   name: category
                   type: varchar(50)
-#  - changeSet:
-#      id: create-users
-#      author: Matvei
-#      changes:
-#        - createTable:
-#            tableName: users
-#            columns:
-#              - column:
-#                  name: id
-#                  type: int
-#                  autoIncrement: true
-#                  constraints:
-#                    primaryKey: true
-#                    unique: true
-#              - column:
-#                  name: first_name
-#                  type: varchar(255)
-#              - column:
-#                  name: password
-#                  type: varchar(255)
-#              - column:
-#                  name: role
-#                  type: varchar(255)
-#              - column:
-#                  name: user_name
-#                  type: varchar(30)
+  - changeSet:
+      id: create-users
+      author: Matvei
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: birth_date
+                  type: date
+              - column:
+                  name: country
+                  type: varchar(100)
+              - column:
+                  name: email
+                  type: varchar(100)
+              - column:
+                  name: first_name
+                  type: varchar(100)
+              - column:
+                  name: last_name
+                  type: varchar(100)
+              - column:
+                  name: password
+                  type: varchar(100)
+              - column:
+                  name: status
+                  type: varchar(100)
+              - column:
+                  name: subscriber_counter
+                  type: int
+              - column:
+                  name: username
+                  type: varchar(100)
+  - changeSet:
+      id: create-roles
+      author: Matvei
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(100)
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_roles_names
+                    references: users(id)
