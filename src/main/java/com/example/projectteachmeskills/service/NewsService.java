@@ -1,6 +1,5 @@
 package com.example.projectteachmeskills.service;
 
-import com.example.projectteachmeskills.dto.NewsDTO;
 import com.example.projectteachmeskills.entity.News;
 
 import java.util.List;
@@ -8,9 +7,9 @@ import java.util.Optional;
 
 public interface NewsService {
 
-    void save(NewsDTO newsDTO);
+    News save(News news);
 
-    void saveAll(List<News> news);
+    News save(Long id,News news);
 
     News findById(Long id);
 

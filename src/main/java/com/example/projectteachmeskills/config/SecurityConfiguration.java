@@ -21,15 +21,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/auth/**";
 
     private static final String[] PUBLIC_URLS = {
-            "/v2/api-docs",
-            "/swagger-ui/index.html",
+            "/authenticate",
             "/swagger-resources/**",
-            "configuration/**",
-            "webjars/**",
-            "/*.html",
-            "/**/*.html",
-            "/**/*.css",
-            "/**/*.js"
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/webjars/**"
     };
 
     @Bean
@@ -46,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers(PUBLIC_URLS).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasAuthority("ADMIN")
                 .anyRequest().authenticated()
@@ -55,4 +52,3 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().sameOrigin();
     }
 }
-

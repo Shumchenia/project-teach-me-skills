@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ProjectTeachMeSkillsApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProjectTeachMeSkillsApplication.class, args);
-        }
+     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

@@ -2,7 +2,9 @@ package com.example.projectteachmeskills.controller;
 
 import com.example.projectteachmeskills.entity.News;
 import com.example.projectteachmeskills.service.NewsService;
+import com.example.projectteachmeskills.util.NewsByContainingNotFoundException;
 import com.example.projectteachmeskills.util.NewsByIdNotFoundException;
+import com.example.projectteachmeskills.util.NewsByCategoryNotFoundException;
 import com.example.projectteachmeskills.util.NewsErrorResponce;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,6 +43,24 @@ public class NewsController {
     private ResponseEntity<NewsErrorResponce> handleException(NewsByIdNotFoundException e){
         NewsErrorResponce responce = new NewsErrorResponce(
                 "News with this id wasn't found",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(responce, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<NewsErrorResponce> handleException(NewsByContainingNotFoundException e){
+        NewsErrorResponce responce = new NewsErrorResponce(
+                "News with this containing wasn't found",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(responce, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<NewsErrorResponce> handleException(NewsByCategoryNotFoundException e){
+        NewsErrorResponce responce = new NewsErrorResponce(
+                "News with this category wasn't found",
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(responce, HttpStatus.NOT_FOUND);

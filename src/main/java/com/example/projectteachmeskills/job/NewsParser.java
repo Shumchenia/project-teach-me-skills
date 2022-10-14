@@ -1,9 +1,7 @@
 package com.example.projectteachmeskills.job;
 
 import com.example.projectteachmeskills.config.ParseConfigs;
-import com.example.projectteachmeskills.dto.NewsDTO;
 import com.example.projectteachmeskills.entity.News;
-import com.example.projectteachmeskills.mapper.NewsMapper;
 import com.example.projectteachmeskills.service.NewsService;
 import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
@@ -12,13 +10,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.expression.Lists;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +40,7 @@ public class NewsParser {
 
                 if (newsTime.isAfter(lastParseTime) && newsTime.isBefore(LocalDateTime.now())) {
 
-                    NewsDTO news = new NewsDTO();
+                    News news = new News();
                     String category = el.getElementsByClass("news-item__tag").text();
                     news.setContentUrl("https://www.championat.com/" + el.getElementsByTag("a")
                             .attr("href"));

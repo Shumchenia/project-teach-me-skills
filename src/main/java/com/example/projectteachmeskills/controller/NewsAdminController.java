@@ -1,6 +1,6 @@
 package com.example.projectteachmeskills.controller;
 
-import com.example.projectteachmeskills.dto.NewsDTO;
+import com.example.projectteachmeskills.entity.News;
 import com.example.projectteachmeskills.service.NewsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,8 @@ public class NewsAdminController {
     private final NewsService newsService;
 
     @PostMapping
-    public void news(@RequestBody NewsDTO news){
-        System.out.println(news);
-        newsService.save(news);
+    public News news(@RequestBody News news){
+        return newsService.save(news);
     }
 
     @DeleteMapping("/{id}")
